@@ -1,10 +1,11 @@
 import React from 'react';
+import SFMenu from './menus/SFmenu';
+
 
 const Dashboard = () => {
     return (
         <div>
-            <h1>Student/Faculty Dashboard</h1>
-            {/* Shared dashboard components */}
+           <SFMenu/>
         </div>
     );
 };
