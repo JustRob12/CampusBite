@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+const APIURL = import.meta.env.VITE_API_URL;
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -11,7 +12,7 @@ const Cart = () => {
             const token = localStorage.getItem('token'); // Retrieve JWT token
 
             try {
-                const response = await axios.get('http://localhost:5000/api/auth/cart', {
+                const response = await axios.get(`${APIURL}/auth/cart`, {
                     headers: {
                         Authorization: `Bearer ${token}`, // Attach token to the request
                     },
@@ -33,7 +34,7 @@ const Cart = () => {
 
         try {
             const response = await axios.put(
-                `http://localhost:5000/api/auth/cart/increment/${cartItemId}`,
+                `${APIURL}/auth/cart/increment/${cartItemId}`,
                 {},
                 {
                     headers: {
@@ -59,7 +60,7 @@ const Cart = () => {
 
         try {
             const response = await axios.put(
-                `http://localhost:5000/api/auth/cart/decrement/${cartItemId}`,
+                `${APIURL}/auth/cart/decrement/${cartItemId}`,
                 {},
                 {
                     headers: {
@@ -84,7 +85,7 @@ const Cart = () => {
         const token = localStorage.getItem('token');
 
         try {
-            await axios.delete(`http://localhost:5000/api/auth/cart/${cartItemId}`, {
+            await axios.delete(`${APIURL}/auth/cart/${cartItemId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -107,7 +108,7 @@ const Cart = () => {
 
     try {
         const response = await axios.post(
-            'http://localhost:5000/api/auth/order', // Your updated order endpoint
+            `${APIURL}/auth/order`, // Your updated order endpoint
             { 
                 items: cartItems, 
                 userName // Send userName in the order request

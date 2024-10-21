@@ -40,7 +40,7 @@ const Menu = () => {
     // Handle delete item
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/auth/items/${id}`);
+            await axios.delete(`${APIURL}/auth/items/${id}`);
             setFoodItems(foodItems.filter((item) => item._id !== id));
         } catch (error) {
             console.error('Failed to delete item:', error);
@@ -59,7 +59,7 @@ const Menu = () => {
 
     const handleUpdate = async () => {
         try {
-            await axios.put(`http://localhost:5000/api/auth/items/${editingItem}`, formData);
+            await axios.put(`${APIURL}/auth/items/${editingItem}`, formData);
             setFoodItems(
                 foodItems.map((item) =>
                     item._id === editingItem ? { ...item, ...formData } : item
