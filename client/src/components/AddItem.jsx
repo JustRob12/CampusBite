@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+const APIURL = import.meta.env.VITE_API_URL;
 
 const AddItem = () => {
     const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const AddItem = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/items/add', formData);
+            const response = await axios.post(`${APIURL}/auth/items/add`, formData);
             if (response.status === 201) {
                 alert('Item added successfully!');
                 setFormData({ name: '', description: '', price: '', quantity: '', category: 'Meal' });

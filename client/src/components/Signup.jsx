@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+const APIURL = import.meta.env.VITE_API_URL; // Load the environment variable
 
 const Signup = () => {
     const [name, setName] = useState('');
@@ -12,13 +13,14 @@ const Signup = () => {
 
     const handleSignup = async (e) => {
         e.preventDefault();
-        const endpoint = role === 'student' 
-            ? 'http://localhost:5000/api/auth/student/signup' 
-            : 'http://localhost:5000/api/auth/faculty/signup';
-        const data = role === 'student' 
-            ? { name, studentId, course, year, username, password } 
+
+        // Use the APIURL from environment variables
+        const endpoint = `${APIURL}/auth/${role === 'student' ? 'student' : 'faculty'}/signup`;
+
+        const data = role === 'student'
+            ? { name, studentId, course, year, username, password }
             : { name, facultyId: studentId, course, username, password };
-        
+
         try {
             await axios.post(endpoint, data);
             window.location.href = '/login';
@@ -33,12 +35,11 @@ const Signup = () => {
                 <h1 className="text-center text-2xl font-bold text-[#003366] mb-2">Welcome to Campus Bite!</h1>
                 <h2 className="text-center text-lg text-gray-600 mb-4">Fill up the form to proceed</h2>
                 <form onSubmit={handleSignup} className="space-y-4">
-                    <select 
+                    <select
                         className="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003366]"
                         onChange={(e) => setRole(e.target.value)}
                     >
                         <option value="student">User</option>
-                   
                     </select>
 
                     {/* Name and ID Fields Side-by-Side */}
@@ -53,7 +54,7 @@ const Signup = () => {
                         <input
                             type="text"
                             className="w-1/2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003366]"
-                            placeholder={role === 'student' ? "ID" : "Faculty ID"}
+                            placeholder={role === 'student' ? 'ID' : 'Faculty ID'}
                             onChange={(e) => setStudentId(e.target.value)}
                             required
                         />
@@ -74,7 +75,6 @@ const Signup = () => {
                                 className="w-1/2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003366]"
                                 placeholder="Year"
                                 onChange={(e) => setYear(e.target.value)}
-                             
                             />
                         )}
                     </div>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+const APIURL = import.meta.env.VITE_API_URL;
 
 const SignupAdmin = () => {
     const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const SignupAdmin = () => {
         setSuccess('');
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/admin/signup', formData);
+            const response = await axios.post(`${APIURL}/auth/admin/signup`, formData);
             setSuccess(response.data.message);
             setFormData({
                 name: '',

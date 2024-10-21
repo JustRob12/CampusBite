@@ -1,6 +1,7 @@
 // components/Notification.jsx
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+const APIURL = import.meta.env.VITE_API_URL;
 
 const Notification = () => {
     const [notifications, setNotifications] = useState([]);
@@ -12,7 +13,7 @@ const Notification = () => {
             const token = localStorage.getItem('token');
 
             try {
-                const response = await axios.get('http://localhost:5000/api/auth/notifications', {
+                const response = await axios.get(`${APIURL}/auth/notifications`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -32,7 +33,7 @@ const Notification = () => {
         const token = localStorage.getItem('token');
 
         try {
-            await axios.delete(`http://localhost:5000/api/auth/notifications/${notificationId}`, {
+            await axios.delete(`${APIURL}/auth/notifications/${notificationId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

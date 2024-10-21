@@ -2,6 +2,8 @@
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+const APIURL = import.meta.env.VITE_API_URL;
+
 
 const ViewOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -14,7 +16,7 @@ const ViewOrders = () => {
             const token = localStorage.getItem('token'); // Retrieve JWT token
 
             try {
-                const response = await axios.get('http://localhost:5000/api/auth/orders', {
+                const response = await axios.get(`${APIURL}/auth/orders`, {
                     headers: {
                         Authorization: `Bearer ${token}`, // Attach token to the request
                     },
@@ -36,18 +38,18 @@ const ViewOrders = () => {
 
         try {
             // Send notification
-            await axios.post('http://localhost:5000/api/auth/notify', { orderId, userId }, {
+            await axios.post(`${APIURL}/auth/notify`, { orderId, userId }, {
                 headers: {
                     Authorization: `Bearer ${token}`, // Attach token to the request
                 },
             });
 
             // Delete the order from the database
-            await axios.delete(`http://localhost:5000/api/auth/orders/${orderId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`, // Attach token to the request
-                },
-            });
+             await axios.delete(`${APIURL}/auth/orders/${orderId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Attach token to the request
+            },
+        });
 
             // Update the UI by removing the deleted order
             setOrders((prevOrders) => prevOrders.filter((order) => order.orderId !== orderId));

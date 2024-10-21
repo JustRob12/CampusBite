@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+const APIURL = import.meta.env.VITE_API_URL;
 
 const Menu = () => {
     const [foodItems, setFoodItems] = useState([]);
@@ -20,8 +21,10 @@ const Menu = () => {
             const token = localStorage.getItem('token');
 
             try {
-                const response = await axios.get('http://localhost:5000/api/auth/items', {
-                    headers: { Authorization: `Bearer ${token}` },
+                const response = await axios.get(`${APIURL}/auth/items`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
                 setFoodItems(response.data);
                 setLoading(false);

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+const APIURL = import.meta.env.VITE_API_URL;
 
 const SFMenu = () => {
     const [foodItems, setFoodItems] = useState([]);
@@ -13,7 +14,7 @@ const SFMenu = () => {
             const token = localStorage.getItem('token'); // Retrieve JWT token
 
             try {
-                const response = await axios.get('http://localhost:5000/api/auth/items', {
+                const response = await axios.get(`${APIURL}/auth/items`, {
                     headers: {
                         Authorization: `Bearer ${token}`, // Attach token to the request
                     },
@@ -37,7 +38,7 @@ const SFMenu = () => {
         const token = localStorage.getItem('token'); // Retrieve JWT token
 
         try {
-            await axios.post('http://localhost:5000/api/auth/cart/add', { foodItemId, quantity: 1 }, {
+            await axios.post(`${APIURL}/auth/cart/add`, { foodItemId, quantity: 1 }, {
                 headers: {
                     Authorization: `Bearer ${token}`, // Attach token to the request
                 },
