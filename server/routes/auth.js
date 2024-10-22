@@ -257,24 +257,26 @@ router.get('/orders', verifyToken, async (req, res) => {
 });
 
 
-// POST /api/auth/notify
 router.post('/notify', verifyToken, async (req, res) => {
-    const { orderId, userId } = req.body; // Extract orderId and userId from the request body
-
+    const { orderId, userId, message, itemsList, totalPrice } = req.body;
+  
     try {
-        const notification = new Notification({
-            userId,
-            orderId,
-            message: `Your order ${orderId} is ready!`,
-        });
-
-        await notification.save(); // Save notification to the database
-        res.status(201).json({ message: 'Notification sent successfully!' });
+      const notification = new Notification({
+        userId,
+        orderId,
+        itemsList,
+        totalPrice,
+        message,
+      });
+  
+      await notification.save(); // Save the notification to the database
+  
+      res.status(201).json({ message: 'Notification sent successfully!' });
     } catch (error) {
-        console.error('Error sending notification:', error);
-        res.status(500).json({ message: 'Failed to send notification' });
+      console.error('Error sending notification:', error);
+      res.status(500).json({ message: 'Failed to send notification' });
     }
-});
+  });
 
 // Route to fetch notifications for a specific user
 router.get('/notifications', verifyToken, async (req, res) => {
