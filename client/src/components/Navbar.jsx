@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FiBell, FiShoppingCart } from 'react-icons/fi'; // Cart and Notification icons
 import { GiMeal } from 'react-icons/gi'; // Food icon for Menu
 import { Link, useNavigate } from 'react-router-dom';
+const APIURL = import.meta.env.VITE_API_URL;
 
 const Navbar = () => {
     const [cartCount, setCartCount] = useState(0); // State to store cart count
@@ -14,7 +15,7 @@ const Navbar = () => {
             const token = localStorage.getItem('token'); // Get JWT token
 
             try {
-                const response = await axios.get('http://localhost:5000/api/auth/cart', {
+                const response = await axios.get(`${APIURL}/auth/cart`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
